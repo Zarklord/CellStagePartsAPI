@@ -29,6 +29,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
                        LPVOID lpReserved
 					 )
 {
+	long error;
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
@@ -54,7 +55,12 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 		 - Detour functions
 		*/
 
-		ModAPI::ModAPIUtils::AddInitFunction(BetterCells::Initialize);
+		ModAPI::ModAPIUtils::AddInitFunction(BetterCells::Initialize); 
+		
+		PrepareDetours(hModule);
+		// It is recommended to attach the detoured methods in specialised methods in the class
+		BetterCells::AttachDetours();
+		error = SendDetours();
 
 		//WARNING: INTENTIONAL FALL THROUGH TO NEXT CASE
 	case DLL_THREAD_ATTACH:
@@ -62,9 +68,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 	case DLL_THREAD_DETACH:
 		//WARNING: INTENTIONAL FALL THROUGH TO NEXT CASE
 	case DLL_PROCESS_DETACH:
-		if (partlist) {
-			delete partlist;
-		}
 		break;
 	}
 	return TRUE;

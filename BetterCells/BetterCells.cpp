@@ -25,59 +25,74 @@
 #include <Spore\App\PropertyList.h>
 #include <Spore\App\IPropManager.h>
 #include <Spore\ResourceKey.h>
+#include <EASTL\list.h>
 
 
 bool BetterCells::Initialize() {
-	if (!partlist) {
-		partlist = new eastl::vector<CellPartListKey>;
-		if (!partlist) {
-			return false;
-		}
-		partListSize = 0;
-		int groupID = Hash::FNV("cell_editor_part_list");
-		eastl::vector<uint32_t> instanceList = eastl::vector<uint32_t>{};
-		App::IPropManager::Get()->GetAllListIDs(groupID, instanceList);
-		if (instanceList.size() == 0) {
-			//the bundled package wasnt included and no other mod provided a list for us to use so lets default it to whats in the executable.
-			return false;
-		}
-		for (eastl_size_t i = 0; i < instanceList.size(); i++) {
-			App::PropertyList::Pointer pProp = nullptr;  // this is just an intrusive_ptr
-			App::IPropManager::Get()->GetPropertyList(instanceList[i], groupID, pProp);
+	partListSize = 0;
+	int groupID = Hash::FNV("cell_editor_part_list");
+	eastl::vector<uint32_t> instanceList{};
+	App::IPropManager::Get()->GetAllListIDs(groupID, instanceList);
+	if (instanceList.size() == 0) {
+		//the bundled package wasnt included and no other mod provided a list for us to use so lets default it to whats in the executable.
+		return false;
+	}
+	for (eastl_size_t i = 0; i < instanceList.size(); i++) {
+		App::PropertyList::Pointer pProp = nullptr;  // this is just an intrusive_ptr
+		App::IPropManager::Get()->GetPropertyList(instanceList[i], groupID, pProp);
 
-			//load the two lists that define these cellpartlist's
-			size_t UnlockIDCount = 0;
-			int * UnlockIDList = nullptr;
-			size_t PartHashCount = 0;
-			ResourceKey * PartHashList = nullptr;
-			App::Property::GetArrayInt32(pProp.get(), Hash::FNV("partUnlockID"), UnlockIDCount, UnlockIDList);
-			App::Property::GetArrayKey(pProp.get(), Hash::FNV("partName"), PartHashCount, PartHashList);
+		//load the two lists that define these cellpartlist's
+		size_t UnlockIDCount = 0;
+		int * UnlockIDList = nullptr;
+		size_t PartHashCount = 0;
+		ResourceKey * PartHashList = nullptr;
+		App::Property::GetArrayInt32(pProp.get(), Hash::FNV("partUnlockID"), UnlockIDCount, UnlockIDList);
+		App::Property::GetArrayKey(pProp.get(), Hash::FNV("partName"), PartHashCount, PartHashList);
 
-			//lets skip over any files with unbalanced lists
-			if (UnlockIDCount != PartHashCount) continue;
-			partListSize += UnlockIDCount;
-			for (size_t j = 0; j < UnlockIDCount; j++) {
-				//until we add more unlockID's lets lock them to the avaliable values...
-				int unlockID = UnlockIDList[j];
-				if (unlockID > 0xB) {
-					unlockID = 0xB;
-				} else if (unlockID < 0x2) {
-					unlockID = 0x2;
-				}
-				partlist->emplace_back(CellPartListKey{unlockID, PartHashList[j].mnInstanceID});
+		//lets skip over any files with unbalanced lists
+		if (UnlockIDCount != PartHashCount) continue;
+		partListSize += UnlockIDCount;
+		for (size_t j = 0; j < UnlockIDCount; j++) {
+			//until we add more unlockID's lets lock them to the avaliable values...
+			int unlockID = UnlockIDList[j];
+			if (unlockID > 0xB) {
+				unlockID = 0xB;
+			} else if (unlockID < 0x2) {
+				unlockID = 0x2;
 			}
+			partlist.emplace_back(CellPartListKey{unlockID, PartHashList[j].mnInstanceID});
+			idList.emplace_back(unlockID);
 		}
 	}
+	wasConfiged = true;
+	idList.unique();
 	HANDLE hProcess = GetCurrentProcess();
 	//Detouring the method failed spectacularly so instead we replace a couple bytes with our own cell part array
 	//this replaces where it loads the pointer to the part array
-	int toWrite = (int)partlist->data() + 0x4;
+	int toWrite = (int)partlist.data() + 0x4;
 	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE50153, 0x0, 0xE4FAC3), &toWrite, 0x4, 0);
 	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE501D2, 0x0, 0xE4FB42), &toWrite, 0x4, 0);
 	//this replaces where it does a compare to see if its at the end of the array
 	//NOTE: the cmp it does is a memory location based check, not a number based check.
-	toWrite = (int)partlist->data() + ((sizeof(CellPartListKey) * partListSize) + 0x4);
+	toWrite = (int)partlist.data() + ((sizeof(CellPartListKey) * partListSize) + 0x4);
 	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE501C4, 0x0, 0xE4FB34), &toWrite, 0x4, 0);
 	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE5020C, 0x0, 0xE4FB7C), &toWrite, 0x4, 0);
 	return true;
+}
+
+long BetterCells::AttachDetours() {
+	SetDetourAddress(CellEditorRemoveNewEffect, GetAddress(0xE50220, 0x0, 0xE4FB90));
+
+	long result = AttachDetourFunctionStatic(CellEditorRemoveNewEffect_original, DetouredCellEditorRemoveNewEffect);
+	return result;
+}
+
+void DetouredCellEditorRemoveNewEffect() {
+	uint32_t * PartAddress;
+	__asm {
+		mov PartAddress, EAX
+	};
+	for (auto i : idList) {
+		if (PartAddress[i] == 2) PartAddress[i] = 1;
+	}
 }

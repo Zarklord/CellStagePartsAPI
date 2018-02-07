@@ -20,17 +20,30 @@
 #pragma once
 
 #include <Spore\Internal.h>
+#include <Spore\Detouring.h>
 #include <EASTL\vector.h>
+#include <EASTL\list.h>
+
+#define DetouredMethodStaticFixed(name, returnType, newName, parameters) typedef returnType (* name##_original_t)(parameters); \
+	static name##_original_t name##_original; \
+	static returnType newName (parameters);
 
 class BetterCells {
 	public:
 		static bool Initialize();
+		static long AttachDetours();
 };
+
+#pragma DisableOptimization
+DetouredMethodStaticFixed(CellEditorRemoveNewEffect, void, DetouredCellEditorRemoveNewEffect,
+						  PARAMS(void));
 
 struct CellPartListKey {
 	int unlockID;
 	uint32_t partHash;
 };
 
-static eastl::vector<CellPartListKey> * partlist;
+static eastl::vector<CellPartListKey> partlist{};
+static eastl::list<uint32_t> idList{};
 static int partListSize;
+static bool wasConfiged = false;
