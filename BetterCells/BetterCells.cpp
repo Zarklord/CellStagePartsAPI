@@ -88,6 +88,7 @@ long BetterCells::AttachDetours() {
 }
 
 void DetouredCellEditorRemoveNewEffect() {
+	if (!wasConfiged) return CallOriginalStatic(CellEditorRemoveNewEffect);
 	uint32_t * PartAddress;
 	__asm {
 		mov PartAddress, EAX
