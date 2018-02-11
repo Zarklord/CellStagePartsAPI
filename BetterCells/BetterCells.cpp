@@ -54,7 +54,7 @@ bool BetterCells::Initialize() {
 		partListSize += UnlockIDCount;
 		for (size_t j = 0; j < UnlockIDCount; j++) {
 			//until we add more unlockID's lets lock them to the avaliable values...
-			int unlockID = UnlockIDList[j];
+			uint32_t unlockID = UnlockIDList[j];
 			if (unlockID > 0xB) {
 				unlockID = 0xB;
 			} else if (unlockID < 0x2) {
@@ -66,34 +66,130 @@ bool BetterCells::Initialize() {
 	}
 	wasConfiged = true;
 	idList.unique();
-	HANDLE hProcess = GetCurrentProcess();
-	//Detouring the method failed spectacularly so instead we replace a couple bytes with our own cell part array
-	//this replaces where it loads the pointer to the part array
-	int toWrite = (int)partlist.data() + 0x4;
-	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE50153, 0x0, 0xE4FAC3), &toWrite, 0x4, 0);
-	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE501D2, 0x0, 0xE4FB42), &toWrite, 0x4, 0);
-	//this replaces where it does a compare to see if its at the end of the array
-	//NOTE: the cmp it does is a memory location based check, not a number based check.
-	toWrite = (int)partlist.data() + ((sizeof(CellPartListKey) * partListSize) + 0x4);
-	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE501C4, 0x0, 0xE4FB34), &toWrite, 0x4, 0);
-	WriteProcessMemory(hProcess, (LPVOID)GetAddress(0xE5020C, 0x0, 0xE4FB7C), &toWrite, 0x4, 0);
-	return true;
 }
 
 long BetterCells::AttachDetours() {
 	SetDetourAddress(CellEditorRemoveNewEffect, GetAddress(0xE50220, 0x0, 0xE4FB90));
+	SetDetourAddress(CellEditorSetUnlockedPartList, GetAddress(0xE50130, 0x0, 0xE4FAA0));
 
 	long result = AttachDetourFunctionStatic(CellEditorRemoveNewEffect_original, DetouredCellEditorRemoveNewEffect);
+	result |= AttachDetourFunctionStatic(CellEditorSetUnlockedPartList_original, DetouredCellEditorSetUnlockedPartList);
 	return result;
 }
 
 void DetouredCellEditorRemoveNewEffect() {
-	if (!wasConfiged) return CallOriginalStatic(CellEditorRemoveNewEffect);
+	//this is called after leaving the cell editor in cell stage.
+	//the passed arguement wasn't put on the stack but instead is eax.
 	uint32_t * PartAddress;
 	__asm {
 		mov PartAddress, EAX
 	};
+	//we have to do this since the compiler likes to do this check in the EAX register which is where the arguement is passed.
+	if (!wasConfiged) {
+		__asm mov EAX, PartAddress;
+		return CallOriginalStatic(CellEditorRemoveNewEffect);
+	}
+	//2 means display the "new" part effect, 1 just means unlocked.
 	for (auto i : idList) {
 		if (PartAddress[i] == 2) PartAddress[i] = 1;
+	}
+}
+
+#if EXECUTABLE_TYPE == SPORE_STANDARD
+            #define ChooseAddress(addressStandard, addressSteam, addressSteamPatched) (addressStandard - 0x400000)
+#elif EXECUTABLE_TYPE == SPORE_STEAM
+    #if PATCHED_SPORE == 0 
+        #define ChooseAddress(addressStandard, addressSteam, addressSteamPatched) (addressSteam - 0x400000)
+    #else 
+        #define ChooseAddress(addressStandard, addressSteam, addressSteamPatched) (addressSteamPatched - 0x400000)
+    #endif
+#endif
+
+#define CELLPARTSFOLDERHASH 0x40616000
+void DetouredCellEditorSetUnlockedPartList(uint32_t * CellDataList) {
+	//this is called upon entering cell stage, and upon mating and entering the editor
+	if (!wasConfiged) return CallOriginalStatic(CellEditorSetUnlockedPartList, CellDataList);
+
+	//void function();
+	__asm {
+		mov ECX, EDI
+		mov EAX, baseAddress
+		add EAX, ChooseAddress(0x5976E0, 0x0, 0x597A20)
+		call EAX
+	};
+	//void function(0, 0, CELLPARTSFOLDERHASH);
+	__asm {
+		push CELLPARTSFOLDERHASH
+		push 0
+		push 0
+		mov ECX, EDI
+		mov EAX, baseAddress
+		add EAX, ChooseAddress(0x599100, 0x0, 0x599440)
+		call EAX
+	};
+	__asm mov [EDI + 0xC], 0;
+	for (auto i : partlist) {
+		//void function(i.partHash, 0, 0, 0, 0, 0, 0, 0, 0);
+		__asm {
+			push 0
+			push 0
+			push 0
+			push 0
+			push 0
+			push 0
+			push 0
+			push 0
+			mov ECX, i.partHash
+			push ECX
+			mov ECX, EDI
+			mov EAX, baseAddress
+			add EAX, ChooseAddress(0x598A70, 0x0, 0x598DB0)
+			call EAX
+		};
+		uint32_t isUnlockedValue = CellDataList[i.unlockID];
+		if (isUnlockedValue == 1) {
+			//void function(i.partHash, CELLPARTSFOLDERHASH, 0);
+			__asm {
+				push 0
+				push CELLPARTSFOLDERHASH
+				push i.partHash
+				mov ECX, EDI
+				mov EAX, baseAddress
+				add EAX, ChooseAddress(0x596A60, 0x0, 0x596DA0)
+				call EAX
+			};
+		} else if (isUnlockedValue == 0) {
+			//void function(i.partHash, CELLPARTSFOLDERHASH);
+			__asm {
+				push CELLPARTSFOLDERHASH
+				push i.partHash
+				mov ECX, EDI
+				mov EAX, baseAddress
+				add EAX, ChooseAddress(0x596AD0, 0x0, 0x596E10)
+				call EAX
+			};
+		}
+	}
+	//void function();
+	__asm {
+		mov ECX, EDI
+		mov EAX, baseAddress
+		add EAX, ChooseAddress(0x594010, 0x0, 0x5942E0)
+		call EAX
+	};
+	for (auto i : partlist) {
+		uint32_t isUnlockedValue = CellDataList[i.unlockID];
+		if (isUnlockedValue == 2) {
+			//void function(i.partHash, CELLPARTSFOLDERHASH, 0);
+			__asm {
+				push 0
+				push CELLPARTSFOLDERHASH
+				push i.partHash
+				mov ECX, EDI
+				mov EAX, baseAddress
+				add EAX, ChooseAddress(0x596A60, 0x0, 0x596DA0)
+				call EAX
+			};
+		}
 	}
 }

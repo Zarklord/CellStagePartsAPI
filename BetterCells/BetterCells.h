@@ -37,9 +37,12 @@ class BetterCells {
 #pragma DisableOptimization
 DetouredMethodStaticFixed(CellEditorRemoveNewEffect, void, DetouredCellEditorRemoveNewEffect,
 						  PARAMS(void));
+#pragma DisableOptimization
+DetouredMethodStaticFixed(CellEditorSetUnlockedPartList, void, DetouredCellEditorSetUnlockedPartList,
+						  PARAMS(uint32_t * CellDataList));
 
 struct CellPartListKey {
-	int unlockID;
+	uint32_t unlockID;
 	uint32_t partHash;
 };
 
