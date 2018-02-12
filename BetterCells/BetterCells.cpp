@@ -66,14 +66,15 @@ bool BetterCells::Initialize() {
 	}
 	wasConfiged = true;
 	idList.unique();
+	return true;
 }
 
 long BetterCells::AttachDetours() {
 	SetDetourAddress(CellEditorRemoveNewEffect, GetAddress(0xE50220, 0x0, 0xE4FB90));
 	SetDetourAddress(CellEditorSetUnlockedPartList, GetAddress(0xE50130, 0x0, 0xE4FAA0));
 
-	long result = AttachDetourFunctionStatic(CellEditorRemoveNewEffect_original, DetouredCellEditorRemoveNewEffect);
-	result |= AttachDetourFunctionStatic(CellEditorSetUnlockedPartList_original, DetouredCellEditorSetUnlockedPartList);
+	long result = AttachDetourFunction(CellEditorRemoveNewEffect, DetouredCellEditorRemoveNewEffect);
+	result |= AttachDetourFunction(CellEditorSetUnlockedPartList, DetouredCellEditorSetUnlockedPartList);
 	return result;
 }
 
@@ -87,7 +88,7 @@ void DetouredCellEditorRemoveNewEffect() {
 	//we have to do this since the compiler likes to do this check in the EAX register which is where the arguement is passed.
 	if (!wasConfiged) {
 		__asm mov EAX, PartAddress;
-		return CallOriginalStatic(CellEditorRemoveNewEffect);
+		return CellEditorRemoveNewEffect_original();
 	}
 	//2 means display the "new" part effect, 1 just means unlocked.
 	for (auto i : idList) {
@@ -108,7 +109,7 @@ void DetouredCellEditorRemoveNewEffect() {
 #define CELLPARTSFOLDERHASH 0x40616000
 void DetouredCellEditorSetUnlockedPartList(uint32_t * CellDataList) {
 	//this is called upon entering cell stage, and upon mating and entering the editor
-	if (!wasConfiged) return CallOriginalStatic(CellEditorSetUnlockedPartList, CellDataList);
+	if (!wasConfiged) return CellEditorSetUnlockedPartList_original(CellDataList);
 
 	//void function();
 	__asm {
