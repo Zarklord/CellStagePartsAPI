@@ -1,5 +1,5 @@
 /****************************************************************************
-* Copyright (C) 2018 Zarklord
+* Copyright (C) 2018, 2019 Zarklord
 *
 * This file is part of BetterCells.
 *
@@ -19,55 +19,52 @@
 
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "stdafx.h"
-
-#include <ModAPI\MainUtilities.h>
-
 #include "BetterCells.h"
 
+void Initialize()
+{
+	// This method is executed when the game starts, before the user interface is shown
+	// Here you can do things such as:
+	//  - Add new cheats
+	//  - Add new simulator classes
+	//  - Add new game modes
+	//  - Add new space tools
+	//  - Change materials
+	BetterCells::Initialize();
+}
+
+void Dispose()
+{
+	// This method is called when the game is closing
+}
+
+void AttachDetours()
+{
+	// Call the attach() method on any detours you want to add
+	// For example: cViewer_SetRenderType_detour::attach(GetAddress(cViewer, SetRenderType));
+	BetterCells::AttachDetours();
+}
+
+// Generally, you don't need to touch any code here
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
 					 )
 {
-	long error;
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
+		ModAPI::AddPostInitFunction(Initialize);
+		ModAPI::AddDisposeFunction(Dispose);
 
-		// This line is always necessary
-		ModAPI::ModAPIUtils::InitModAPI();
-
-		/* Insert code here */
-
-		/* 
-		Note: You cannot use any Spore function inside this method. 
-		If you want to add any initialization methods, do it with:
-
-		bool myFunction() {...}
-
-		And then, inside the DllMain function:
-
-		ModAPI::ModAPIUtils::AddInitFunction(&myFunction);
-
-		Things you can do in the DllMain method:
-		 - Add init functions
-		 - Add UI event listeners
-		 - Detour functions
-		*/
-
-		ModAPI::ModAPIUtils::AddInitFunction(BetterCells::Initialize); 
-		
 		PrepareDetours(hModule);
-		// It is recommended to attach the detoured methods in specialised methods in the class
-		BetterCells::AttachDetours();
-		error = SendDetours();
-
-		//WARNING: INTENTIONAL FALL THROUGH TO NEXT CASE
-	case DLL_THREAD_ATTACH:
+		AttachDetours();
+		CommitDetours();
 		break;
-	case DLL_THREAD_DETACH:
-		//WARNING: INTENTIONAL FALL THROUGH TO NEXT CASE
+
 	case DLL_PROCESS_DETACH:
+	case DLL_THREAD_ATTACH:
+	case DLL_THREAD_DETACH:
 		break;
 	}
 	return TRUE;

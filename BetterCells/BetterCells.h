@@ -1,5 +1,5 @@
 /****************************************************************************
-* Copyright (C) 2018 Zarklord
+* Copyright (C) 2018, 2019 Zarklord
 *
 * This file is part of BetterCells.
 *
@@ -19,34 +19,24 @@
 
 #pragma once
 
-#include <Spore\Internal.h>
-#include <Spore\Detouring.h>
-#include <EASTL\vector.h>
+#include <EASTL\fixed_vector.h>
 #include <EASTL\list.h>
+#include <Spore\ModAPI.h>
 
-#define DetouredMethodStaticFixed(name, returnType, newName, parameters) typedef returnType (* name##_original_t)(parameters); \
-	static name##_original_t name##_original; \
-	static returnType newName (parameters);
+namespace BetterCells {
+	struct CellPartListKey {
+		uint32_t unlockID;
+		uint32_t partHash;
+	};
 
-class BetterCells {
-	public:
-		static bool Initialize();
-		static long AttachDetours();
-};
+	extern eastl::vector<CellPartListKey> partlist;
+	extern eastl::list<uint32_t> idList;
+	extern int partListSize;
+	extern bool wasConfiged;
 
-#pragma DisableOptimization
-DetouredMethodStaticFixed(CellEditorRemoveNewEffect, void, DetouredCellEditorRemoveNewEffect,
-						  PARAMS(void));
-#pragma DisableOptimization
-DetouredMethodStaticFixed(CellEditorSetUnlockedPartList, void, DetouredCellEditorSetUnlockedPartList,
-						  PARAMS(uint32_t * CellDataList));
+	bool Initialize();
+	long AttachDetours();
 
-struct CellPartListKey {
-	uint32_t unlockID;
-	uint32_t partHash;
-};
-
-static eastl::vector<CellPartListKey> partlist{};
-static eastl::list<uint32_t> idList{};
-static int partListSize;
-static bool wasConfiged = false;
+	static_detour(EnterCellEditor_detour, void(uint32_t*)) {};
+	static_detour(LeaveCellEditor_detour, void()) {};
+}
