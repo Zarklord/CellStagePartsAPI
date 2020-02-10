@@ -26,7 +26,7 @@
 namespace BetterCells {
 	struct CellPartListKey {
 		uint32_t unlockID;
-		uint32_t partHash;
+		uint32_t partinstanceID;
 	};
 
 	extern eastl::vector<CellPartListKey> partlist;
