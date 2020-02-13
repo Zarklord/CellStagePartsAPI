@@ -1,9 +1,9 @@
 /****************************************************************************
 * Copyright (C) 2018, 2019 Zarklord
 *
-* This file is part of BetterCells.
+* This file is part of CellStagePartsAPI.
 *
-* BetterCells is free software: you can redistribute it and/or modify
+* CellStagePartsAPI is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -14,7 +14,7 @@
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with BetterCells.  If not, see <http://www.gnu.org/licenses/>.
+* along with CellStagePartsAPI.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #pragma once
@@ -23,7 +23,7 @@
 #include <EASTL\list.h>
 #include <Spore\ModAPI.h>
 
-namespace BetterCells {
+namespace CellStagePartsAPI {
 	struct CellPartListKey {
 		uint32_t unlockID;
 		uint32_t partinstanceID;

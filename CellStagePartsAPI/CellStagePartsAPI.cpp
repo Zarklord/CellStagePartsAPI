@@ -1,9 +1,9 @@
 /****************************************************************************
 * Copyright (C) 2018, 2019 Zarklord
 *
-* This file is part of BetterCells.
+* This file is part of CellStagePartsAPI.
 *
-* BetterCells is free software: you can redistribute it and/or modify
+* CellStagePartsAPI is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -14,15 +14,15 @@
 * GNU General Public License for more details.
 *
 * You should have received a copy of the GNU General Public License
-* along with BetterCells.  If not, see <http://www.gnu.org/licenses/>.
+* along with CellStagePartsAPI.  If not, see <http://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #include "stdafx.h"
-#include "BetterCells.h"
+#include "CellStagePartsAPI.h"
 #include <Spore\Hash.h>
 #include <Spore\Properties.h>
 
-namespace BetterCells {
+namespace CellStagePartsAPI {
 	eastl::vector<CellPartListKey> partlist{};
 	eastl::list<uint32_t> idList{};
 	int partListSize;
@@ -74,10 +74,10 @@ namespace BetterCells {
 }
 
 constexpr auto CELLPARTSGROUPID = 0x40616000;
-void BetterCells::EnterCellEditor_detour::DETOUR(uint32_t* CellDataList) {
+void CellStagePartsAPI::EnterCellEditor_detour::DETOUR(uint32_t* CellDataList) {
 	uint32_t* ClassPtr;
 	__volatile __asm mov ClassPtr, EDI; //the this* is stored in EDI, pull it out before it gets clobbered
-	if (!BetterCells::wasConfiged) {
+	if (!CellStagePartsAPI::wasConfiged) {
 		//restore the this* to EDI before calling the original function
 		__volatile __asm mov EDI, ClassPtr;
 		return original_function(CellDataList);
@@ -86,7 +86,7 @@ void BetterCells::EnterCellEditor_detour::DETOUR(uint32_t* CellDataList) {
 	CALL(Address(ModAPI::ChooseAddress(0x5976E0, 0x597A20)), void, Args(uint32_t*), Args(ClassPtr));
 	CALL(Address(ModAPI::ChooseAddress(0x599100, 0x599440)), void, Args(uint32_t*, int, int, int), Args(ClassPtr, 0, 0, CELLPARTSGROUPID));
 	*((byte*)ClassPtr + 0xC) = 0;
-	for (auto i : BetterCells::partlist) {
+	for (auto i : CellStagePartsAPI::partlist) {
 		CALL(Address(ModAPI::ChooseAddress(0x598A70, 0x598DB0)), void, Args(uint32_t*, int, int, int, unsigned int, int, int, int, int, int), Args(ClassPtr, i.partinstanceID, 0, 0, 0, 0, 0, 0, 0, 0));
 		uint32_t isUnlockedValue = CellDataList[i.unlockID];
 		if (isUnlockedValue == 1) {
@@ -97,7 +97,7 @@ void BetterCells::EnterCellEditor_detour::DETOUR(uint32_t* CellDataList) {
 		}
 	}
 	CALL(Address(ModAPI::ChooseAddress(0x594010, 0x5942E0)), void, Args(uint32_t*), Args(ClassPtr));
-	for (auto i : BetterCells::partlist) {
+	for (auto i : CellStagePartsAPI::partlist) {
 		uint32_t isUnlockedValue = CellDataList[i.unlockID];
 		if (isUnlockedValue == 2) {
 			CALL(Address(ModAPI::ChooseAddress(0x596A60, 0x596DA0)), void, Args(uint32_t*, int, int, int), Args(ClassPtr, i.partinstanceID, CELLPARTSGROUPID, 0));
@@ -105,16 +105,16 @@ void BetterCells::EnterCellEditor_detour::DETOUR(uint32_t* CellDataList) {
 	}
 }
 
-void BetterCells::LeaveCellEditor_detour::DETOUR() {
+void CellStagePartsAPI::LeaveCellEditor_detour::DETOUR() {
 	uint32_t* ClassPtr;
 	__volatile __asm mov ClassPtr, EAX; //the this* is stored in EAX, pull it out before it gets clobbered
-	if (!BetterCells::wasConfiged) {
+	if (!CellStagePartsAPI::wasConfiged) {
 		//restore the this* to EAX before calling the original function
 		__volatile __asm mov EAX, ClassPtr;
 		return original_function();
 	}
 	//2 means display the "new" part effect, 1 just means unlocked.
-	for (auto i : BetterCells::idList) {
+	for (auto i : CellStagePartsAPI::idList) {
 		if (ClassPtr[i] == 2) ClassPtr[i] = 1;
 	}
 }

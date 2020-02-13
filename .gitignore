@@ -23,12 +23,8 @@ bld/
 [Oo]bj/
 
 # Intermidate Building Things
-BetterCells/[Dd]ebug - Disk/
-BetterCells/[Dd]ebug - Steam Patched/
-BetterCells/[Dd]ebug - Steam/
-BetterCells/[Rr]elease - Disk/
-BetterCells/[Rr]elease - Steam Patched/
-BetterCells/[Rr]elease - Steam/
+CellStagePartsAPI/[Dd]ebug/
+CellStagePartsAPI/[Rr]elease/
 
 # Visual Studio 2015 cache/options directory
 .vs/

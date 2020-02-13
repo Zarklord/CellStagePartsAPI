@@ -1,20 +1,20 @@
 ========================================================================
-    DYNAMIC LINK LIBRARY : BetterCells Project Overview
+    DYNAMIC LINK LIBRARY : CellStagePartsAPI Project Overview
 ========================================================================
 
-AppWizard has created this BetterCells DLL for you.
+AppWizard has created this CellStagePartsAPI DLL for you.
 
 This file contains a summary of what you will find in each of the files that
-make up your BetterCells application.
+make up your CellStagePartsAPI application.
 
 
-BetterCells.vcxproj
+CellStagePartsAPI.vcxproj
     This is the main project file for VC++ projects generated using an Application Wizard.
     It contains information about the version of Visual C++ that generated the file, and
     information about the platforms, configurations, and project features selected with the
     Application Wizard.
 
-BetterCells.vcxproj.filters
+CellStagePartsAPI.vcxproj.filters
     This is the filters file for VC++ projects generated using an Application Wizard. 
     It contains information about the association between the files in your project 
     and the filters. This association is used in the IDE to show grouping of files with
@@ -26,7 +26,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named BetterCells.pch and a precompiled types file named StdAfx.obj.
+    named CellStagePartsAPI.pch and a precompiled types file named StdAfx.obj.
 
 /////////////////////////////////////////////////////////////////////////////
 Other notes:
