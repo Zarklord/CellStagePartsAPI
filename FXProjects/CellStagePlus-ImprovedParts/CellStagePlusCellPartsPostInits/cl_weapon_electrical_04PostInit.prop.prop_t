@@ -1,0 +1,5 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+float modelScale 1.4
+vector3 modelSwatchRotation (0, 0, -90)

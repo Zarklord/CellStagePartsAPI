@@ -1,0 +1,16 @@
+key parent Adventure_brushes~!0x0E904976.prop
+keys paletteCategoryIconList
+	editors_creature~!button-mouth-norm.png
+	editors_creature~!button-mouth-off.png
+	editors_creature~!button-mouth-hl.png
+	editors_creature~!button-mouth-act.png
+	editors_creature~!button-mouth-on-norm.png
+	editors_creature~!button-mouth-off.png
+	editors_creature~!button-mouth-on-hl.png
+	editors_creature~!button-mouth-on-act.png
+	editors_creature~!button-mouth-norm.png
+end
+texts paletteCategoryName
+	(CE!0x887c91bb) "Mouths"
+end
+uint32 paletteCategorySequenceNumber 100

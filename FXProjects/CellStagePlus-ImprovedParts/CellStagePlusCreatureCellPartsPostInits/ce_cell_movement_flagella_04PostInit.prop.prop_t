@@ -1,0 +1,11 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+float itemUnlockFindPercentage 1
+int32 itemUnlockLevel 1
+int32 modelCapabilityStealth 1
+key modelLeftFile creature_parts~!ce_cell_movement_flagella_04
+float modelMaxScale 1.5
+float modelMinScale 0.5
+int32 modelPrice 15
+key modelRightFile creature_parts~!ce_cell_movement_flagella_04-symmetric

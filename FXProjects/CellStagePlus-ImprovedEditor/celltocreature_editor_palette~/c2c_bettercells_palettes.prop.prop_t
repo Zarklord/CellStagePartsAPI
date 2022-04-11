@@ -1,0 +1,5 @@
+keys palettePalettePages
+	celltocreature_editor_palette_pages~!ce_page_cell_weapons
+	celltocreature_editor_palette_pages~!ce_page_cell_details
+	celltocreature_editor_palette_pages~!ce_page_cell_eyes
+end

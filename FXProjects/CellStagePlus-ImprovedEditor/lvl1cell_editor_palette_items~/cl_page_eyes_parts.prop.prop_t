@@ -1,0 +1,19 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+end
+keys palettePagePartItems
+	cell_parts~!cl_sense_eye_01-symmetric
+	cell_parts~!cl_sense_eye_02-symmetric
+	cell_parts~!cl_sense_eye_03-symmetric
+	cell_parts~!cl_sense_eye_04-symmetric
+end
+key palettePagePartParentPage cl_page_eyes

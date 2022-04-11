@@ -1,0 +1,10 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+key modelMeshLOD0 editor_rigblocks~!cl_movement_flagella_03.rw4
+float modelMaxScale 1.5
+float modelMinScale 0.5
+float modelScale 1.2
+key skinpaintDiffuseTexture part_skin_textures~!cl_movement_flagella_03__diffuse.rw4
+key skinpaintSpecBumpTexture part_skin_textures~!cl_movement_flagella_03__specBump.rw4
+key skinpaintTintMaskTexture part_skin_textures~!cl_movement_flagella_03__tintMask.rw4

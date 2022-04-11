@@ -1,0 +1,11 @@
+uint32s removeProperties
+	0x1CBB2F62
+	0x31C3E5B2
+end
+float itemUnlockFindPercentage 1
+int32 itemUnlockLevel 1
+vector3 modelCreatureEffectOffset (0, -0.052, -0.01)
+float modelCreatureEffectOffsetFixY 0.278971
+float modelMaxScale 1.5
+float modelMinScale 0.5
+int32 modelPrice 15

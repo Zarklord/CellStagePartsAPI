@@ -1,0 +1,10 @@
+float paletteItemHeight 45
+float paletteItemWidth 50
+float palettePageHorizontalOffset -10
+float palettePageHorizontalSpacing 0
+float palettePageItemMaxPercentageHeight 0.1
+float palettePageItemPercentageWidth 0.25
+int32 palettePageNumColumns 4
+int32 palettePageNumRows 10
+float palettePageVerticalOffset 95
+float palettePageVerticalSpacing 0

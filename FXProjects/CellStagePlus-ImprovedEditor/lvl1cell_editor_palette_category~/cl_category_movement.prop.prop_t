@@ -1,0 +1,16 @@
+key parent Adventure_brushes~!0x0E904976.prop
+keys paletteCategoryIconList
+	editors_creature~!button-cell-norm.png
+	editors_creature~!button-cell-off.png
+	editors_creature~!button-cell-hl.png
+	editors_creature~!button-cell-act.png
+	editors_creature~!button-cell-on-norm.png
+	editors_creature~!button-cell-off.png
+	editors_creature~!button-cell-on-hl.png
+	editors_creature~!button-cell-on-act.png
+	editors_creature~!button-cell-norm.png
+end
+texts paletteCategoryName
+	(cell_editor!0x9903266d) "Movement"
+end
+uint32 paletteCategorySequenceNumber 300

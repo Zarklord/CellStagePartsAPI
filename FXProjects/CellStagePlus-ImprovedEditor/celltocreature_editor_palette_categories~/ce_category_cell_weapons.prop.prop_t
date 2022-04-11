@@ -1,0 +1,16 @@
+key parent Adventure_brushes~!0x0E904976.prop
+keys paletteCategoryIconList
+	editors_creature~!button-weapon-norm.png
+	editors_creature~!button-weapon-off.png
+	editors_creature~!button-weapon-hl.png
+	editors_creature~!button-weapon-act.png
+	editors_creature~!button-weapon-on-norm.png
+	editors_creature~!button-weapon-off.png
+	editors_creature~!button-weapon-on-hl.png
+	editors_creature~!button-weapon-on-act.png
+	editors_creature~!button-weapon-norm.png
+end
+texts paletteCategoryName
+	(CE!0x228d8f36) "Weapons"
+end
+uint32 paletteCategorySequenceNumber 600

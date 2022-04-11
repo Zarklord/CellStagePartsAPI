@@ -1,0 +1,16 @@
+key parent Adventure_brushes~!0x0E904976.prop
+keys paletteCategoryIconList
+	editors_creature~!button-eye-norm.png
+	editors_creature~!button-eye-off.png
+	editors_creature~!button-eye-hl.png
+	editors_creature~!button-eye-act.png
+	editors_creature~!button-eye-on-norm.png
+	editors_creature~!button-eye-off.png
+	editors_creature~!button-eye-on-hl.png
+	editors_creature~!button-eye-on-act.png
+	editors_creature~!button-eye-norm.png
+end
+texts paletteCategoryName
+	(cell_editor!0x59f614e8) "Eyes"
+end
+uint32 paletteCategorySequenceNumber 200

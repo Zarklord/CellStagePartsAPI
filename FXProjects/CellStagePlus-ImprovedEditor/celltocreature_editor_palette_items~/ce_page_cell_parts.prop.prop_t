@@ -1,0 +1,44 @@
+
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+	1
+	1
+	1
+	1
+	2
+	2
+	2
+	2
+end
+keys palettePagePartItems
+	creature_parts~!ce_cell_mouth_jaw_01
+	creature_parts~!ce_cell_mouth_jaw_02
+	creature_parts~!ce_cell_mouth_jaw_03
+	creature_parts~!ce_cell_mouth_jaw_04
+	creature_parts~!ce_cell_mouth_filter_01
+	creature_parts~!ce_cell_mouth_filter_02
+	creature_parts~!ce_cell_mouth_filter_03
+	creature_parts~!ce_cell_mouth_filter_04
+	creature_parts~!ce_cell_mouth_poker_01
+	creature_parts~!ce_cell_mouth_poker_02
+	creature_parts~!ce_cell_mouth_poker_03
+	creature_parts~!ce_cell_mouth_poker_04
+end
+key palettePagePartParentPage ce_page_cell

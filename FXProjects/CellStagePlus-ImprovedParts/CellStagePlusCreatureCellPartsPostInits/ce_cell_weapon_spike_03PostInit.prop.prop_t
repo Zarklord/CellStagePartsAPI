@@ -1,0 +1,7 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+int32 modelCapabilityCharge 1
+float modelMaxScale 1.5
+float modelMinScale 0.5
+int32 modelPrice 10

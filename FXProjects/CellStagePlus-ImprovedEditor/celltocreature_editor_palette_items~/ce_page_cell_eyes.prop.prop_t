@@ -1,0 +1,19 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+end
+keys palettePagePartItems
+	creature_parts~!ce_cell_sense_eye_01-symmetric
+	creature_parts~!ce_cell_sense_eye_02-symmetric
+	creature_parts~!ce_cell_sense_eye_03-symmetric
+	creature_parts~!ce_cell_sense_eye_04-symmetric
+end
+key palettePagePartParentPage ce_page_cell_eyes

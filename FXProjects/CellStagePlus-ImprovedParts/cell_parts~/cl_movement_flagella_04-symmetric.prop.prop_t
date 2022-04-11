@@ -1,0 +1,4 @@
+key parent cell_parts~!cl_movement_flagella_04
+key modelBlockUpgradesTo creature_parts~!ce_cell_movement_flagella_04-symmetric
+key modelMeshLOD0 editor_rigblocks~!cl_movement_flagella_04.rw4
+vector3 modelRotation (0, 180, 0)

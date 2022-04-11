@@ -1,0 +1,10 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+int32 modelCapabilitySense 1
+float modelMaxScale 1.5
+float modelMinScale 0.5
+int32 modelPrice 5
+vector3 modelRotation (30, -90, 0)
+vector3 modelRotationBallHandleOffset (0, -0.5, 0)
+vector3 modelSwatchRotation (-15, -30, -5)

@@ -1,0 +1,6 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+float itemUnlockFindPercentage 0
+int32 itemUnlockLevel 1
+vector3 modelRotation (30, 90, 0)

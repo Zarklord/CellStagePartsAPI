@@ -1,0 +1,11 @@
+keys paletteCategoryIconList
+	editors_creature~!button-c2c-limbs-norm.png
+	editors_creature~!button-c2c-limbs-off.png
+	editors_creature~!button-c2c-limbs-hl.png
+	editors_creature~!button-c2c-limbs-act.png
+	editors_creature~!button-c2c-limbs-on-norm.png
+	editors_creature~!button-c2c-limbs-off.png
+	editors_creature~!button-c2c-limbs-on-hl.png
+	editors_creature~!button-c2c-limbs-on-act.png
+	editors_creature~!button-c2c-limbs-norm.png
+end

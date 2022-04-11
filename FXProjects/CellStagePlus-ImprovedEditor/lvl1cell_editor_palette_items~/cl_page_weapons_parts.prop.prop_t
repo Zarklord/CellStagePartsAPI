@@ -1,0 +1,43 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+	1
+	1
+	1
+	1
+	2
+	2
+	2
+	2
+end
+keys palettePagePartItems
+	cell_parts~!cl_weapon_spike_01-symmetric
+	cell_parts~!cl_weapon_spike_02-symmetric
+	cell_parts~!cl_weapon_spike_03-symmetric
+	cell_parts~!cl_weapon_spike_04-symmetric
+	cell_parts~!cl_weapon_chemical_01
+	cell_parts~!cl_weapon_chemical_02
+	cell_parts~!cl_weapon_chemical_03
+	cell_parts~!cl_weapon_chemical_04
+	cell_parts~!cl_weapon_electrical_01
+	cell_parts~!cl_weapon_electrical_02
+	cell_parts~!cl_weapon_electrical_03
+	cell_parts~!cl_weapon_electrical_04
+end
+key palettePagePartParentPage cl_page_weapons

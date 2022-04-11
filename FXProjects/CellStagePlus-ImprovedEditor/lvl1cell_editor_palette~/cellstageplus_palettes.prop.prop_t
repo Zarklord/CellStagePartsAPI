@@ -1,0 +1,5 @@
+keys palettePalettePages
+	lvl1cell_editor_palette_pages~!cl_page_weapons
+	lvl1cell_editor_palette_pages~!cl_page_movement
+	lvl1cell_editor_palette_pages~!cl_page_eyes
+end

@@ -1,0 +1,43 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+	1
+	1
+	1
+	1
+	2
+	2
+	2
+	2
+end
+keys palettePagePartItems
+	creature_parts~!ce_cell_movement_flagella_01
+	creature_parts~!ce_cell_movement_flagella_02
+	creature_parts~!ce_cell_movement_flagella_03
+	creature_parts~!ce_cell_movement_flagella_04
+	creature_parts~!ce_cell_movement_cilia_01-symmetric
+	creature_parts~!ce_cell_movement_cilia_02-symmetric
+	creature_parts~!ce_cell_movement_cilia_03-symmetric
+	creature_parts~!ce_cell_movement_cilia_04-symmetric
+	creature_parts~!ce_cell_movement_jet_01
+	creature_parts~!ce_cell_movement_jet_02
+	creature_parts~!ce_cell_movement_jet_03
+	creature_parts~!ce_cell_movement_jet_04
+end
+key palettePagePartParentPage ce_page_cell_details

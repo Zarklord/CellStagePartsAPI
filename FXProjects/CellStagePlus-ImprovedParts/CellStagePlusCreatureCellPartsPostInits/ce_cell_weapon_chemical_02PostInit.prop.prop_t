@@ -1,0 +1,10 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+float itemUnlockFindPercentage 0
+int32 itemUnlockLevel 1
+int32 modelCapabilitySpit 1
+float modelMaxScale 1.5
+float modelMinScale 0.5
+bool modelNoAmbientOcclusion true
+int32 modelPrice 15

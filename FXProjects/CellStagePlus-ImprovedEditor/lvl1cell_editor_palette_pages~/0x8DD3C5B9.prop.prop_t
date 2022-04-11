@@ -1,0 +1,5 @@
+key parent Adventure_brushes~!TemplatePaletteCellParts.prop
+string16 description "Mouths"
+key palettePageParentCategory lvl1cell_editor_palette_category~!cl_category_cell_level_0
+uint32 palettePageSequenceNumber 100
+int32 palettePageSetId 1

@@ -1,0 +1,43 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+	1
+	1
+	1
+	1
+	2
+	2
+	2
+	2
+end
+keys palettePagePartItems
+	creature_parts~!ce_cell_weapon_spike_01-symmetric
+	creature_parts~!ce_cell_weapon_spike_02-symmetric
+	creature_parts~!ce_cell_weapon_spike_03-symmetric
+	creature_parts~!ce_cell_weapon_spike_04-symmetric
+	creature_parts~!ce_cell_weapon_chemical_01
+	creature_parts~!ce_cell_weapon_chemical_02
+	creature_parts~!ce_cell_weapon_chemical_03
+	creature_parts~!ce_cell_weapon_chemical_04
+	creature_parts~!ce_cell_weapon_electrical_01
+	creature_parts~!ce_cell_weapon_electrical_02
+	creature_parts~!ce_cell_weapon_electrical_03
+	creature_parts~!ce_cell_weapon_electrical_04
+end
+key palettePagePartParentPage ce_page_cell_weapons	

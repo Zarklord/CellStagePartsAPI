@@ -1,0 +1,43 @@
+int32s palettePagePartItemColumns
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+	0
+	1
+	2
+	3
+end
+int32s palettePagePartItemRows
+	0
+	0
+	0
+	0
+	1
+	1
+	1
+	1
+	2
+	2
+	2
+	2
+end
+keys palettePagePartItems
+	cell_parts~!cl_movement_flagella_01
+	cell_parts~!cl_movement_flagella_02
+	cell_parts~!cl_movement_flagella_03
+	cell_parts~!cl_movement_flagella_04
+	cell_parts~!cl_movement_cilia_01-symmetric
+	cell_parts~!cl_movement_cilia_02-symmetric
+	cell_parts~!cl_movement_cilia_03-symmetric
+	cell_parts~!cl_movement_cilia_04-symmetric
+	cell_parts~!cl_movement_jet_01
+	cell_parts~!cl_movement_jet_02
+	cell_parts~!cl_movement_jet_03
+	cell_parts~!cl_movement_jet_04
+end
+key palettePagePartParentPage cl_page_movement
