@@ -37,9 +37,4 @@
   <ItemGroup>
     <None Include="SdkPathConfig.props" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt">
-      <Filter>Internal</Filter>
-    </Text>
-  </ItemGroup>
 </Project>
