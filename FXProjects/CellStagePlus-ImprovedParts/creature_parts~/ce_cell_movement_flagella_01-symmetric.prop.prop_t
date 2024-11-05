@@ -1,5 +1,0 @@
-key parent creature_parts~!ce_cell_movement_flagella_01
-float itemUnlockFindPercentage 1
-int32 itemUnlockLevel 1
-key modelMeshLOD0 editor_rigblocks~!ce_cell_movement_flagella_01.rw4
-vector3 modelRotation (0, 180, 0)

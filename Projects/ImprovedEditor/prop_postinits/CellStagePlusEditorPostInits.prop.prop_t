@@ -1,0 +1,11 @@
+string8s postinitList
+	"TemplatePaletteCellParts TemplatePaletteCellPartsPostInit"
+	"palalshopper palalshopperPostInit"
+	"CellTemplate CellTemplatePostInit"
+end
+key TemplatePaletteCellParts Adventure_brushes~!TemplatePaletteCellParts
+key palalshopper celltocreature_editor_palette_categories~!palalshopper
+key CellTemplate editor_setup~!CellTemplate
+key TemplatePaletteCellPartsPostInit CellStagePlusPostInits!TemplatePaletteCellPartsPostInit
+key palalshopperPostInit CellStagePlusPostInits!palalshopperPostInit
+key CellTemplatePostInit CellStagePlusPostInits!CellTemplatePostInit

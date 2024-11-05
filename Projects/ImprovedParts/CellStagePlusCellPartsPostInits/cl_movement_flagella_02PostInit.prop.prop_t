@@ -1,0 +1,7 @@
+uint32s removeProperties
+	0x1CBB2F62
+end
+key modelLeftFile cell_rigblock~!cl_movement_flagella_02
+key modelRightFile cell_rigblock~!cl_movement_flagella_02-symmetric
+vector3 modelSwatchRotation (0, 0, -90)
+float skinpaintMaxOcclusion 0.5
